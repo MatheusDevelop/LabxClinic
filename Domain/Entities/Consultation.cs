@@ -14,22 +14,24 @@ namespace Domain.Entities
             Guid pacientId,
             DateTime consultationDate,
             Guid medicalSpecialtyId,
-            Guid clinicId)
+            Guid clinicId, string consultationName)
         {
             DoctorId = doctorId;
             PacientId = pacientId;
             ConsultationDate = consultationDate;
             MedicalSpecialtyId = medicalSpecialtyId;
             ClinicId = clinicId;
+            ConsultationName = consultationName;
         }
 
-        public Consultation(Doctor doctor, Pacient pacient, DateTime consultationDate, MedicalSpecialty medicalSpecialty, Clinic clinic)
+        public Consultation(Doctor doctor, Pacient pacient, DateTime consultationDate, MedicalSpecialty medicalSpecialty, Clinic clinic, string consultationName)
         {
             Doctor = doctor;
             Pacient = pacient;
             ConsultationDate = consultationDate;
             MedicalSpecialty = medicalSpecialty;
             Clinic = clinic;
+            ConsultationName = consultationName;
         }
         public string ConsultationName { get; private set; }
         public Guid DoctorId { get; private set; }
@@ -58,6 +60,8 @@ namespace Domain.Entities
                    .WithMany(e => e.Consultations)
                    .HasForeignKey(e=> e.DoctorId);
 
+            builder.Property(e => e.ConsultationName).HasMaxLength(100)
+                .IsRequired();
             builder.HasOne(e => e.Pacient)
                    .WithMany(e => e.Consultations)
                    .HasForeignKey(e => e.PacientId);

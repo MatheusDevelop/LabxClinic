@@ -17,6 +17,7 @@ namespace Infrastructure.Context
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfiguration(new ConsultationMap());
+            modelBuilder.ApplyConfiguration(new MedicalSpecialtyMap());
 
         }
     }

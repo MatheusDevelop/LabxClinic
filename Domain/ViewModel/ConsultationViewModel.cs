@@ -6,6 +6,7 @@ namespace Domain.ViewModel
 {
     public class ConsultationInsertViewModel 
     {
+        public string ConsultationName { get; set; }
         public Guid DoctorId { get; set; }
         public Guid PacientId { get; set; }
         public Guid MedicalSpecialtyId { get; set; }

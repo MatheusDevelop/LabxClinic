@@ -1,4 +1,5 @@
-﻿using Domain.Mappings.ConsultationMaps;
+﻿using Domain.Mappings;
+using Domain.Mappings.ConsultationMaps;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace WebApi.Configuration
@@ -7,7 +8,7 @@ namespace WebApi.Configuration
     {
         public static void AddAutoMapperConfiguration(this IServiceCollection services)
         {
-            services.AddAutoMapper(typeof(ConsultationMapping));
+            services.AddAutoMapper(typeof(ConsultationMapping),typeof(MedicalSpecialtyMapping));
         }
 
     }
