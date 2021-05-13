@@ -13,11 +13,15 @@ namespace Infrastructure.Context
         public DbSet<Doctor> Doctor { get; set; }
         public DbSet<MedicalSpecialty> MedicalSpecialty { get; set; }
         public DbSet<Clinic> Clinic { get; set; }
+        public DbSet<User> User { get; set; }
+        public DbSet<Person> Person { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfiguration(new ConsultationMap());
             modelBuilder.ApplyConfiguration(new MedicalSpecialtyMap());
+            modelBuilder.ApplyConfiguration(new PersonMap());
+            modelBuilder.ApplyConfiguration(new UserMap());
 
         }
     }
