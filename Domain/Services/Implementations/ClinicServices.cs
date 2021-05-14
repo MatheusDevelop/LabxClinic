@@ -34,7 +34,7 @@ namespace Domain.Services.Implementations
                 if (model.Id != Guid.Empty)
                     query = query.Where(e => e.Id.Equals(model.Id));
                 if (model.MedicalSpecialtyId != Guid.Empty)
-                    query = query.Where(e => e.ClinicMedicalSpecialties.Any(e=> e.ClinicId.Equals(model.Id)));
+                    query = query.Where(e => e.ClinicMedicalSpecialties.Any(e=> e.MedicalSpecialtyId.Equals(model.MedicalSpecialtyId)));
 
                 query = QuicksearchFilter(filter, query);
 

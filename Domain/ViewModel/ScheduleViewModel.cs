@@ -14,6 +14,7 @@ namespace Domain.ViewModel
     {
         public int Month { get; set; }
         public Guid ClinicId { get; set; }
+        public Guid DoctorId { get; set; }
         public Guid MedicalSpecialtyId { get; set; }
     }
     public class ScheduleViewModel 

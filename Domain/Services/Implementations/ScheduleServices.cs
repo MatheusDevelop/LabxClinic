@@ -30,7 +30,9 @@ namespace Domain.Services.Implementations
                 query = query.Where(e => e.ClinicId.Equals(model.ClinicId));
             if (model.MedicalSpecialtyId != Guid.Empty)
                 query = query.Where(e => e.MedicalSpecialtyId.Equals(model.MedicalSpecialtyId));
-            if (model.Month != null)
+            if (model.DoctorId != Guid.Empty)
+                query = query.Where(e => e.AvaibleDates.Any(e=> e.DoctorId.Equals(model.DoctorId)));
+            if (model.Month != 0)
                 query = query.Where(e => e.AvaibleDates.Any(e => e.Date.Month.Equals(model.Month)));
 
             var list = _repository.GetList(query,new FilterViewModel());
