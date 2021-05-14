@@ -4,53 +4,22 @@ using Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(LabxContext))]
-    partial class LabxContextModelSnapshot : ModelSnapshot
+    [Migration("20210512195003_Clinic2")]
+    partial class Clinic2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.5")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("Domain.Entities.AvaibleDate", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Deleted")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid>("DoctorId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ScheduleId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("UpdateDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DoctorId");
-
-                    b.HasIndex("ScheduleId");
-
-                    b.ToTable("AvaibleDate");
-                });
 
             modelBuilder.Entity("Domain.Entities.Clinic", b =>
                 {
@@ -113,21 +82,6 @@ namespace Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("ClinicAddress");
-                });
-
-            modelBuilder.Entity("Domain.Entities.ClinicMedicalSpecialty", b =>
-                {
-                    b.Property<Guid>("ClinicId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("MedicalSpecialtyId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("ClinicId", "MedicalSpecialtyId");
-
-                    b.HasIndex("MedicalSpecialtyId");
-
-                    b.ToTable("ClinicMedicalSpecialty");
                 });
 
             modelBuilder.Entity("Domain.Entities.Consultation", b =>
@@ -245,56 +199,6 @@ namespace Infrastructure.Migrations
                     b.ToTable("Pacient");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Schedule", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ClinicId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Deleted")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid>("MedicalSpecialtyId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("UpdateDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClinicId");
-
-                    b.HasIndex("MedicalSpecialtyId")
-                        .IsUnique();
-
-                    b.ToTable("Schedule");
-                });
-
-            modelBuilder.Entity("Domain.Entities.AvaibleDate", b =>
-                {
-                    b.HasOne("Domain.Entities.Doctor", "Doctor")
-                        .WithMany("AvaibleDates")
-                        .HasForeignKey("DoctorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.Schedule", "Schedule")
-                        .WithMany("AvaibleDates")
-                        .HasForeignKey("ScheduleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Doctor");
-
-                    b.Navigation("Schedule");
-                });
-
             modelBuilder.Entity("Domain.Entities.ClinicAddress", b =>
                 {
                     b.HasOne("Domain.Entities.Clinic", "Clinic")
@@ -304,25 +208,6 @@ namespace Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Clinic");
-                });
-
-            modelBuilder.Entity("Domain.Entities.ClinicMedicalSpecialty", b =>
-                {
-                    b.HasOne("Domain.Entities.Clinic", "Clinic")
-                        .WithMany("ClinicMedicalSpecialties")
-                        .HasForeignKey("ClinicId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.MedicalSpecialty", "MedicalSpecialty")
-                        .WithMany("ClinicMedicalSpecialties")
-                        .HasForeignKey("MedicalSpecialtyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Clinic");
-
-                    b.Navigation("MedicalSpecialty");
                 });
 
             modelBuilder.Entity("Domain.Entities.Consultation", b =>
@@ -360,60 +245,26 @@ namespace Infrastructure.Migrations
                     b.Navigation("Pacient");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Schedule", b =>
-                {
-                    b.HasOne("Domain.Entities.Clinic", "Clinic")
-                        .WithMany("Schedules")
-                        .HasForeignKey("ClinicId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.MedicalSpecialty", "MedicalSpecialty")
-                        .WithOne("Schedule")
-                        .HasForeignKey("Domain.Entities.Schedule", "MedicalSpecialtyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Clinic");
-
-                    b.Navigation("MedicalSpecialty");
-                });
-
             modelBuilder.Entity("Domain.Entities.Clinic", b =>
                 {
                     b.Navigation("ClinicAddress");
 
-                    b.Navigation("ClinicMedicalSpecialties");
-
                     b.Navigation("Consultations");
-
-                    b.Navigation("Schedules");
                 });
 
             modelBuilder.Entity("Domain.Entities.Doctor", b =>
                 {
-                    b.Navigation("AvaibleDates");
-
                     b.Navigation("Consultations");
                 });
 
             modelBuilder.Entity("Domain.Entities.MedicalSpecialty", b =>
                 {
-                    b.Navigation("ClinicMedicalSpecialties");
-
                     b.Navigation("Consultations");
-
-                    b.Navigation("Schedule");
                 });
 
             modelBuilder.Entity("Domain.Entities.Pacient", b =>
                 {
                     b.Navigation("Consultations");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Schedule", b =>
-                {
-                    b.Navigation("AvaibleDates");
                 });
 #pragma warning restore 612, 618
         }

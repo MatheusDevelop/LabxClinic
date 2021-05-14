@@ -29,6 +29,7 @@ namespace Domain.Services.Implementations
             try 
             {
                 IQueryable<MedicalSpecialty> query = _repository.GetQuery();
+
                 if (!string.IsNullOrEmpty(filter.Quicksearch))
                     query = query.Where(e => e.Name.Contains(filter.Quicksearch));
 

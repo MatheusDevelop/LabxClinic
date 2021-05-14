@@ -23,7 +23,7 @@ namespace WebApi.Controllers
         [HttpGet]
         [Route("select")]
         public ActionResult<List<MedicalSpecialtySelectViewModel>> Select([FromQuery]FilterViewModel filter) 
-        {
+       {
             try
             {
                 List<MedicalSpecialtySelectViewModel> content = _services.Select(filter);

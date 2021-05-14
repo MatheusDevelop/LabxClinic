@@ -19,7 +19,10 @@ namespace Domain.Entities
 
         public string Name { get; private set; }
         public string PicUrl { get; private set; }
+        public Schedule Schedule { get; set; }
         public ICollection<Consultation> Consultations { get; private set; }
+        public ICollection<ClinicMedicalSpecialty> ClinicMedicalSpecialties { get; private set; }
+
     }
     public class MedicalSpecialtyMap : IEntityTypeConfiguration<MedicalSpecialty>
     {

@@ -20,6 +20,8 @@ namespace WebApi.Configuration
                 .AddFluentValidation(e =>
                 {
                     e.RegisterValidatorsFromAssemblyContaining<ConsultationInsertValidation>();
+                    e.RegisterValidatorsFromAssemblyContaining<ScheduleInsertValidation>();
+
                 }
                 );
         }

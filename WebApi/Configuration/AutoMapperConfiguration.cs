@@ -8,7 +8,15 @@ namespace WebApi.Configuration
     {
         public static void AddAutoMapperConfiguration(this IServiceCollection services)
         {
-            services.AddAutoMapper(typeof(ConsultationMapping),typeof(MedicalSpecialtyMapping));
+            services.AddAutoMapper(
+                typeof(ConsultationMapping),
+                typeof(MedicalSpecialtyMapping),
+                typeof(ClinicMapping),
+                typeof(AddressMapping),
+                typeof(ScheduleMapping),
+                typeof(AvaibleDateMapping)
+                )
+                ;
         }
 
     }
