@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Domain.Repositories
 {
-    public interface IAvaibleDateRepository:IGenericRepository<AvaibleDate>
+    public interface IAvaibleDateRepository:IGenericRepository<AvailableDate>
     {
     }
 }

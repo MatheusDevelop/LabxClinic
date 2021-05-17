@@ -11,18 +11,23 @@ using System.Threading.Tasks;
 
 namespace Domain.Services.Implementations
 {
-    public class AvaibleDateServices:BaseService,IAvaibleDateServices
+    public class UserServices : BaseService, IUserServices
     {
-        private readonly IAvaibleDateRepository _repository;
+        private readonly IUserRepository _repository;
         private readonly IMapper _mapper;
-        public AvaibleDateServices(IAvaibleDateRepository repository, IMapper mapper)
+
+        public UserServices(
+            IUserRepository repository, 
+            IMapper mapper)
         {
-            _repository = repository;
             _mapper = mapper;
+            _repository = repository;
         }
-        public async Task Insert(AvaibleDateInsertViewModel model)
+
+
+        public async Task Insert(UserInsertViewModel model)
         {
-            var entity = _mapper.Map<AvaibleDate>(model);            
+            User entity = _mapper.Map<User>(model);
             await _repository.InsertAsync(entity);
         }
     }

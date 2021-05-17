@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Domain.Entities;
 using Domain.Services.Interfaces;
 using Domain.ViewModel;
 using Microsoft.AspNetCore.Http;
@@ -12,11 +13,10 @@ namespace WebApi.Controllers
 {
     [Route("api/v1/clinics")]
     [ApiController]
-    public class ClinicController : ControllerBase
+    public class ClinicController : CrudController<Clinic,ClinicInsertViewModel,IClinicServices>
     {
         private readonly IClinicServices _services;
-
-        public ClinicController(IClinicServices services)
+        public ClinicController(IClinicServices services):base(services)
         {
             _services = services;
         }

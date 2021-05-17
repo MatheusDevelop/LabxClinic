@@ -11,7 +11,12 @@ namespace Domain.Mappings
     {
         public AvaibleDateMapping()
         {
-            CreateMap<AvaibleDateInsertViewModel, AvaibleDate>();
+            CreateMap<AvaibleDateInsertViewModel, AvailableDate>();
+            CreateMap<AvailableDate, AvailableDateViewModel>()
+                .ForMember(e=> e.Hour,op=> op.MapFrom(x=> x.Date.Hour))
+                .ForMember(e=> e.Minutes,op=> op.MapFrom(x=> x.Date.Minute))
+            ;
+
         }
     }
 }

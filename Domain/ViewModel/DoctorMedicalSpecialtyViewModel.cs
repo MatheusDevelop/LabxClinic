@@ -4,10 +4,9 @@ using System.Text;
 
 namespace Domain.ViewModel
 {
-    public class AvaibleDateInsertViewModel
+    public class DoctorClinicMedicalSpecialtyInsertViewModel
     {
-        public Guid ScheduleId { get; set; }
+        public Guid ClinicMedicalSpecialtyId { get; set; }
         public Guid DoctorId { get; set; }
-        public DateTime Date { get; set; }
     }
 }

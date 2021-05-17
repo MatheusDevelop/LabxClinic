@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Domain.Entities;
 using Domain.Services.Interfaces;
 using Domain.ViewModel;
 using Microsoft.AspNetCore.Http;
@@ -12,11 +13,11 @@ namespace WebApi.Controllers
 {
     [Route("api/v1/medical-specialties")]
     [ApiController]
-    public class MedicalSpecialtyController : ControllerBase
+    public class MedicalSpecialtyController : CrudController<MedicalSpecialty,MedicalSpecialtyInsertViewModel,IMedicalSpecialtyServices>
     {
         private readonly IMedicalSpecialtyServices _services;
 
-        public MedicalSpecialtyController(IMedicalSpecialtyServices services)
+        public MedicalSpecialtyController(IMedicalSpecialtyServices services):base(services)
         {
             _services = services;
         }

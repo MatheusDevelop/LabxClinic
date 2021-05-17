@@ -7,13 +7,13 @@ using System.Text;
 
 namespace Domain.Entities
 {
-    public class AvaibleDate:Entity
+    public class AvailableDate:Entity
     {
-        protected AvaibleDate()
+        protected AvailableDate()
         {
 
         }
-        public AvaibleDate(Guid scheduleId, DateTime date, Guid doctorId)
+        public AvailableDate(Guid scheduleId, DateTime date, Guid doctorId)
         {
             ScheduleId = scheduleId;
             Date = date;
@@ -25,9 +25,9 @@ namespace Domain.Entities
         public Schedule Schedule { get; private set; }
         public Doctor Doctor { get; private set; }
     }
-    public class AvaibleDateMap : IEntityTypeConfiguration<AvaibleDate>
+    public class AvaibleDateMap : IEntityTypeConfiguration<AvailableDate>
     {
-        public void Configure(EntityTypeBuilder<AvaibleDate> builder)
+        public void Configure(EntityTypeBuilder<AvailableDate> builder)
         {
             builder.HasKey(e => e.Id);
             builder.HasOne(e => e.Schedule).WithMany(e => e.AvaibleDates).HasForeignKey(e => e.ScheduleId);

@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Domain.Services.Interfaces
 {
-    public interface IMedicalSpecialtyServices:IBaseService
+    public interface IMedicalSpecialtyServices:ICrudServices<MedicalSpecialty,MedicalSpecialtyInsertViewModel>
     {
         public List<MedicalSpecialtySelectViewModel> Select(FilterViewModel filter);
         public List<MedicalSpecialtySelectViewModel> GetSelectViewModel(List<MedicalSpecialty> entities);

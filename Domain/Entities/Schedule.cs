@@ -21,7 +21,7 @@ namespace Domain.Entities
         }
         public Guid ClinicId { get; private set; }
         public Guid MedicalSpecialtyId { get; private set; }
-        public ICollection<AvaibleDate> AvaibleDates { get; private set; }
+        public ICollection<AvailableDate> AvaibleDates { get; private set; }
         public Clinic Clinic { get; private set; }
         public MedicalSpecialty MedicalSpecialty { get; private set; }
     }

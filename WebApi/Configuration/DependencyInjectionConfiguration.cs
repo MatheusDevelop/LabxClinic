@@ -24,7 +24,11 @@ namespace WebApi.Configuration
             services.AddScoped<IDoctorRepository, DoctorRepository>();
             services.AddScoped<IPacientRepository, PacientRepository>();
             services.AddScoped<IClinicRepository, ClinicRepository>();
+            services.AddScoped<IClinicMedicalSpecialtyRepository, ClinicMedicalSpecialtyRepository>();
+            services.AddScoped<IDoctorClinicMedicalSpecialtyRepository, DoctorClinicMedicalSpecialtyRepository>();
+
             services.AddScoped<IScheduleRepository, ScheduleRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IMedicalSpecialtyRepository, MedicalSpecialtyRepository>();
             services.AddScoped<IAvaibleDateRepository, AvaibleDateRepository>();
 
@@ -36,10 +40,14 @@ namespace WebApi.Configuration
             services.AddScoped<IPacientServices, PacientServices>();
             services.AddScoped<IConsultationServices, ConsultationServices>();
             services.AddScoped<IClinicServices, ClinicServices>();
+            services.AddScoped<IClinicMedicalSpecialtyServices, ClinicMedicalSpecialtyServices>();
+            services.AddScoped<IDoctorClinicMedicalSpecialtyServices, DoctorClinicMedicalSpecialtyServices>();
+
+            services.AddScoped<IUserServices, UserServices>();
             services.AddScoped<IMedicalSpecialtyServices, MedicalSpecialtyServices>();
             services.AddScoped<IScheduleServices, ScheduleServices>();
             services.AddScoped<IAddressServices, AddressServices>();
-            services.AddScoped<IAvaibleDateServices, AvaibleDateServices>();
+            services.AddScoped<IAvaibleDateServices, AvailableDateServices>();
 
         }
     }

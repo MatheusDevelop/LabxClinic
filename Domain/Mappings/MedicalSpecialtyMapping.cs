@@ -12,6 +12,8 @@ namespace Domain.Mappings
         public MedicalSpecialtyMapping()
         {
             CreateMap<MedicalSpecialty, MedicalSpecialtySelectViewModel>();
+            CreateMap<MedicalSpecialty, MedicalSpecialtyInsertViewModel>().ReverseMap();
+
         }
     }
 }

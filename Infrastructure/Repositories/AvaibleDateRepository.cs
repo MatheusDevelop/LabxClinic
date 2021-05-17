@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Infrastructure.Repositories
 {
-    public class AvaibleDateRepository : GenericRepository<AvaibleDate>, IAvaibleDateRepository
+    public class AvaibleDateRepository : GenericRepository<AvailableDate>, IAvaibleDateRepository
     {
         public AvaibleDateRepository(LabxContext con) : base(con)
         {

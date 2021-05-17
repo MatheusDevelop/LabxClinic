@@ -14,7 +14,11 @@ namespace WebApi.Configuration
                 typeof(ClinicMapping),
                 typeof(AddressMapping),
                 typeof(ScheduleMapping),
-                typeof(AvaibleDateMapping)
+                typeof(AvaibleDateMapping),
+                typeof(DoctorMapping),
+                typeof(ClinicMedicalSpecialtyMapping),
+                typeof(DoctorClinicMedicalSpecialtyMapping)
+
                 )
                 ;
         }

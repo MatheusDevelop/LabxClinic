@@ -1,0 +1,21 @@
+﻿using AutoMapper;
+using Domain.Entities;
+using Domain.ViewModel;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Domain.Mappings
+{
+    public class DoctorMapping:Profile
+    {
+        public DoctorMapping()
+        {
+            CreateMap<DoctorInsertViewModel, Doctor>();
+            CreateMap<Doctor,DoctorSelectViewModel>();
+            CreateMap<Doctor,DoctorViewModel>();
+
+
+        }
+    }
+}

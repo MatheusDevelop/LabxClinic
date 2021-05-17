@@ -10,6 +10,7 @@ namespace Domain.Entities
         public string Name { get; private set; }
         public string PicUrl { get; private set; }
         public ClinicAddress ClinicAddress { get; private set; }
+        public ICollection<Doctor> Doctors { get; set; }
         public ICollection<ClinicMedicalSpecialty> ClinicMedicalSpecialties { get; private set; }
         public ICollection<Schedule> Schedules { get; private set; }
         public ICollection<Consultation> Consultations { get; private set; }

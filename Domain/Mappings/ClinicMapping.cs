@@ -13,6 +13,8 @@ namespace Domain.Mappings
         {
             CreateMap<Clinic, ClinicSelectViewModel>();
             CreateMap<Clinic, ClinicViewModel>();
+            CreateMap<Clinic, ClinicInsertViewModel>().ReverseMap();
+
         }
     }
 }

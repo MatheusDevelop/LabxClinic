@@ -11,4 +11,9 @@ namespace Domain.ViewModel
         public string PicUrl { get; set; }
 
     }
+    public class MedicalSpecialtyInsertViewModel 
+    {
+        public string Name { get; set; }
+        public string PicUrl { get; set; }
+    }
 }

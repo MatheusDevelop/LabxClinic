@@ -14,6 +14,11 @@ namespace Domain.ViewModel
         public Guid Id { get; set; }
         public Guid MedicalSpecialtyId { get; set; }
     }
+    public class ClinicInsertViewModel 
+    {
+        public string Name { get; set; }
+        public string PicUrl { get; set; }
+    }
     public class ClinicViewModel 
     {
         public Guid Id { get; set; }

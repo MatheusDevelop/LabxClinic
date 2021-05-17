@@ -14,13 +14,13 @@ using System.Text;
 
 namespace Domain.Services.Implementations
 {
-    public class ClinicServices : BaseService,IClinicServices
+    public class ClinicServices : CrudService<Clinic,ClinicInsertViewModel>,IClinicServices
     {
         private readonly IClinicRepository _repository;
         private readonly IMapper _mapper;
         private readonly IAddressServices _addressServices;
 
-        public ClinicServices(IClinicRepository repository, IMapper mapper, IAddressServices addressServices)
+        public ClinicServices(IClinicRepository repository, IMapper mapper, IAddressServices addressServices):base(repository,mapper)
         {
             _repository = repository;
             _mapper = mapper;

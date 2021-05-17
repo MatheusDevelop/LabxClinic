@@ -13,6 +13,7 @@ namespace Domain.ViewModel
     public class ScheduleParams 
     {
         public int Month { get; set; }
+        public int Date { get; set; }
         public Guid ClinicId { get; set; }
         public Guid DoctorId { get; set; }
         public Guid MedicalSpecialtyId { get; set; }

@@ -117,13 +117,28 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.ClinicMedicalSpecialty", b =>
                 {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("ClinicId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("bit");
 
                     b.Property<Guid>("MedicalSpecialtyId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("ClinicId", "MedicalSpecialtyId");
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClinicId");
 
                     b.HasIndex("MedicalSpecialtyId");
 
@@ -177,10 +192,13 @@ namespace Infrastructure.Migrations
                     b.ToTable("Consultations");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Doctor", b =>
+            modelBuilder.Entity("Domain.Entities.DoctorClinicMedicalSpecialty", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ClinicMedicalSpecialtyId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreationDate")
@@ -189,12 +207,19 @@ namespace Infrastructure.Migrations
                     b.Property<bool>("Deleted")
                         .HasColumnType("bit");
 
+                    b.Property<Guid>("DoctorId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("UpdateDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Doctor");
+                    b.HasIndex("ClinicMedicalSpecialtyId");
+
+                    b.HasIndex("DoctorId");
+
+                    b.ToTable("DoctorClinicMedicalSpecialty");
                 });
 
             modelBuilder.Entity("Domain.Entities.MedicalSpecialty", b =>
@@ -245,6 +270,50 @@ namespace Infrastructure.Migrations
                     b.ToTable("Pacient");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Person", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("BirthDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Document")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProfilePicUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("Person");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Person");
+                });
+
             modelBuilder.Entity("Domain.Entities.Schedule", b =>
                 {
                     b.Property<Guid>("Id")
@@ -274,6 +343,47 @@ namespace Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("Schedule");
+                });
+
+            modelBuilder.Entity("Domain.Entities.User", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("User");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Doctor", b =>
+                {
+                    b.HasBaseType("Domain.Entities.Person");
+
+                    b.Property<Guid>("ClinicId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasIndex("ClinicId");
+
+                    b.HasDiscriminator().HasValue("Doctor");
                 });
 
             modelBuilder.Entity("Domain.Entities.AvaibleDate", b =>
@@ -360,6 +470,36 @@ namespace Infrastructure.Migrations
                     b.Navigation("Pacient");
                 });
 
+            modelBuilder.Entity("Domain.Entities.DoctorClinicMedicalSpecialty", b =>
+                {
+                    b.HasOne("Domain.Entities.ClinicMedicalSpecialty", "ClinicMedicalSpecialty")
+                        .WithMany("DoctorClinicMedicalSpecialties")
+                        .HasForeignKey("ClinicMedicalSpecialtyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Doctor", "Doctor")
+                        .WithMany("DoctorClinicMedicalSpecialties")
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ClinicMedicalSpecialty");
+
+                    b.Navigation("Doctor");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Person", b =>
+                {
+                    b.HasOne("Domain.Entities.User", "User")
+                        .WithOne("Person")
+                        .HasForeignKey("Domain.Entities.Person", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Domain.Entities.Schedule", b =>
                 {
                     b.HasOne("Domain.Entities.Clinic", "Clinic")
@@ -379,6 +519,17 @@ namespace Infrastructure.Migrations
                     b.Navigation("MedicalSpecialty");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Doctor", b =>
+                {
+                    b.HasOne("Domain.Entities.Clinic", "Clinic")
+                        .WithMany("Doctors")
+                        .HasForeignKey("ClinicId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Clinic");
+                });
+
             modelBuilder.Entity("Domain.Entities.Clinic", b =>
                 {
                     b.Navigation("ClinicAddress");
@@ -387,14 +538,14 @@ namespace Infrastructure.Migrations
 
                     b.Navigation("Consultations");
 
+                    b.Navigation("Doctors");
+
                     b.Navigation("Schedules");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Doctor", b =>
+            modelBuilder.Entity("Domain.Entities.ClinicMedicalSpecialty", b =>
                 {
-                    b.Navigation("AvaibleDates");
-
-                    b.Navigation("Consultations");
+                    b.Navigation("DoctorClinicMedicalSpecialties");
                 });
 
             modelBuilder.Entity("Domain.Entities.MedicalSpecialty", b =>
@@ -414,6 +565,20 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.Schedule", b =>
                 {
                     b.Navigation("AvaibleDates");
+                });
+
+            modelBuilder.Entity("Domain.Entities.User", b =>
+                {
+                    b.Navigation("Person");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Doctor", b =>
+                {
+                    b.Navigation("AvaibleDates");
+
+                    b.Navigation("Consultations");
+
+                    b.Navigation("DoctorClinicMedicalSpecialties");
                 });
 #pragma warning restore 612, 618
         }
