@@ -12,6 +12,8 @@ namespace Domain.Mappings
         public UserMapping()
         {
             CreateMap<UserInsertViewModel, User>();
+
+            CreateMap<UserLoginViewModel, User>();
         }
     }
 }

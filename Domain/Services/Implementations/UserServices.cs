@@ -30,5 +30,10 @@ namespace Domain.Services.Implementations
             User entity = _mapper.Map<User>(model);
             await _repository.InsertAsync(entity);
         }
+
+        public async Task Login(UserLoginViewModel model) 
+        {
+            User entity = _mapper.Map<User>(model);
+        }
     }
 }
