@@ -28,6 +28,7 @@ namespace Domain.Services.Implementations
         public async Task Insert(UserInsertViewModel model)
         {
             User entity = _mapper.Map<User>(model);
+
             await _repository.InsertAsync(entity);
         }
 

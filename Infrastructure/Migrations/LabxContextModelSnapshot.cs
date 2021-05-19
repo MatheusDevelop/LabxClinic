@@ -19,7 +19,7 @@ namespace Infrastructure.Migrations
                 .HasAnnotation("ProductVersion", "5.0.5")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Domain.Entities.AvaibleDate", b =>
+            modelBuilder.Entity("Domain.Entities.AvailableDate", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -386,7 +386,7 @@ namespace Infrastructure.Migrations
                     b.HasDiscriminator().HasValue("Doctor");
                 });
 
-            modelBuilder.Entity("Domain.Entities.AvaibleDate", b =>
+            modelBuilder.Entity("Domain.Entities.AvailableDate", b =>
                 {
                     b.HasOne("Domain.Entities.Doctor", "Doctor")
                         .WithMany("AvaibleDates")

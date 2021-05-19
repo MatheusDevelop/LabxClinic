@@ -1,9 +1,15 @@
-﻿using Domain.Services.Interfaces;
+﻿using AutoMapper.Configuration;
+using Domain.Entities;
+using Domain.Services.Interfaces;
 using Domain.ViewModel;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace WebApi.Controllers
@@ -13,6 +19,7 @@ namespace WebApi.Controllers
     public class UserController : Controller
     {
         private readonly IUserServices _services;
+
         public UserController(IUserServices services)
         {
             _services = services;
@@ -23,7 +30,9 @@ namespace WebApi.Controllers
         {
             try
             {
+
                 await _services.Insert(model);
+
                 return Ok();
             }
             catch (Exception ex)
@@ -31,5 +40,9 @@ namespace WebApi.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        
+
+
     }
 }
