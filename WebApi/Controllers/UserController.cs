@@ -19,12 +19,27 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
+        [Route("sing-up")]
         public async Task<IActionResult> Post(UserInsertViewModel model)
         {
             try
             {
                 await _services.Insert(model);
                 return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpPost]
+        [Route("login")]
+        public ActionResult Login(UserLoginViewModel model)
+        {
+            try
+            {
+                var jwt = _services.Login(model);
+                return Ok(new { jwt });
             }
             catch (Exception ex)
             {

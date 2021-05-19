@@ -19,7 +19,7 @@ namespace Infrastructure.Migrations
                 .HasAnnotation("ProductVersion", "5.0.5")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Domain.Entities.AvaibleDate", b =>
+            modelBuilder.Entity("Domain.Entities.AvailableDate", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -285,6 +285,10 @@ namespace Infrastructure.Migrations
                     b.Property<bool>("Deleted")
                         .HasColumnType("bit");
 
+                    b.Property<string>("Description")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
                     b.Property<string>("Discriminator")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -386,7 +390,7 @@ namespace Infrastructure.Migrations
                     b.HasDiscriminator().HasValue("Doctor");
                 });
 
-            modelBuilder.Entity("Domain.Entities.AvaibleDate", b =>
+            modelBuilder.Entity("Domain.Entities.AvailableDate", b =>
                 {
                     b.HasOne("Domain.Entities.Doctor", "Doctor")
                         .WithMany("AvaibleDates")

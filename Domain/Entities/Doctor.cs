@@ -8,7 +8,7 @@ namespace Domain.Entities
 {
     public class Doctor:Person
     {
-        public Doctor(string document, string name, string profilePicUrl, DateTime birthDate, Guid userId, Guid clinicId) : base(document, name, profilePicUrl, birthDate, userId)
+        public Doctor(string document, string name, string profilePicUrl, DateTime birthDate, Guid userId, Guid clinicId,string description) : base(document, name, profilePicUrl, birthDate, userId,description)
         {
             ClinicId = clinicId;
         }

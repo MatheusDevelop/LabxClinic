@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Infrastructure.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class InitialCreation : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -98,12 +98,16 @@ namespace Infrastructure.Migrations
                 name: "ClinicMedicalSpecialty",
                 columns: table => new
                 {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ClinicId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    MedicalSpecialtyId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    MedicalSpecialtyId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Deleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ClinicMedicalSpecialty", x => new { x.ClinicId, x.MedicalSpecialtyId });
+                    table.PrimaryKey("PK_ClinicMedicalSpecialty", x => x.Id);
                     table.ForeignKey(
                         name: "FK_ClinicMedicalSpecialty_Clinic_ClinicId",
                         column: x => x.ClinicId,
@@ -154,9 +158,11 @@ namespace Infrastructure.Migrations
                     Document = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ProfilePicUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
                     BirthDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ClinicId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Deleted = table.Column<bool>(type: "bit", nullable: false)
@@ -164,6 +170,12 @@ namespace Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Person", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Person_Clinic_ClinicId",
+                        column: x => x.ClinicId,
+                        principalTable: "Clinic",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Person_User_UserId",
                         column: x => x.UserId,
@@ -246,6 +258,34 @@ namespace Infrastructure.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "DoctorClinicMedicalSpecialty",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ClinicMedicalSpecialtyId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DoctorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Deleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DoctorClinicMedicalSpecialty", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DoctorClinicMedicalSpecialty_ClinicMedicalSpecialty_ClinicMedicalSpecialtyId",
+                        column: x => x.ClinicMedicalSpecialtyId,
+                        principalTable: "ClinicMedicalSpecialty",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DoctorClinicMedicalSpecialty_Person_DoctorId",
+                        column: x => x.DoctorId,
+                        principalTable: "Person",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AvaibleDate_DoctorId",
                 table: "AvaibleDate",
@@ -263,6 +303,11 @@ namespace Infrastructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_ClinicMedicalSpecialty_ClinicId",
+                table: "ClinicMedicalSpecialty",
+                column: "ClinicId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ClinicMedicalSpecialty_MedicalSpecialtyId",
                 table: "ClinicMedicalSpecialty",
                 column: "MedicalSpecialtyId");
@@ -276,6 +321,21 @@ namespace Infrastructure.Migrations
                 name: "IX_Consultations_PacientId",
                 table: "Consultations",
                 column: "PacientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DoctorClinicMedicalSpecialty_ClinicMedicalSpecialtyId",
+                table: "DoctorClinicMedicalSpecialty",
+                column: "ClinicMedicalSpecialtyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DoctorClinicMedicalSpecialty_DoctorId",
+                table: "DoctorClinicMedicalSpecialty",
+                column: "DoctorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Person_ClinicId",
+                table: "Person",
+                column: "ClinicId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Person_UserId",
@@ -304,10 +364,10 @@ namespace Infrastructure.Migrations
                 name: "ClinicAddress");
 
             migrationBuilder.DropTable(
-                name: "ClinicMedicalSpecialty");
+                name: "Consultations");
 
             migrationBuilder.DropTable(
-                name: "Consultations");
+                name: "DoctorClinicMedicalSpecialty");
 
             migrationBuilder.DropTable(
                 name: "Schedule");
@@ -316,13 +376,16 @@ namespace Infrastructure.Migrations
                 name: "Pacient");
 
             migrationBuilder.DropTable(
+                name: "ClinicMedicalSpecialty");
+
+            migrationBuilder.DropTable(
                 name: "Person");
 
             migrationBuilder.DropTable(
-                name: "Clinic");
+                name: "MedicalSpecialty");
 
             migrationBuilder.DropTable(
-                name: "MedicalSpecialty");
+                name: "Clinic");
 
             migrationBuilder.DropTable(
                 name: "User");

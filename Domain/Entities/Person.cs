@@ -11,18 +11,20 @@ namespace Domain.Entities
     {
         protected Person(){ }
 
-        public Person(string docoment, string name, string profilePicUrl, DateTime birthDate, Guid userId)
+        public Person(string docoment, string name, string profilePicUrl, DateTime birthDate, Guid userId, string description)
         {
             Document = docoment;
             Name = name;
             ProfilePicUrl = profilePicUrl;
             BirthDate = birthDate;
             UserId = userId;
+            Description = description;
         }
 
         public string Document { get; private set; }
         public string Name { get; private set; }
         public string ProfilePicUrl { get; private set; }
+        public string Description { get; private set; }
         public DateTime BirthDate { get; private set; }
         public Guid UserId { get; private set; }
         public User User { get; private set; }
@@ -37,6 +39,7 @@ namespace Domain.Entities
             builder.HasOne(e => e.User)
                 .WithOne(e => e.Person)
                 .HasForeignKey<Person>(e => e.UserId);
+            builder.Property(e => e.Description).HasMaxLength(150);
         }
     }
 }

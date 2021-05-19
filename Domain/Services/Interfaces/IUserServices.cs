@@ -10,6 +10,6 @@ namespace Domain.Services.Interfaces
     public interface IUserServices:IBaseService
     {
         public Task Insert(UserInsertViewModel model);
-        public Task Login(UserLoginViewModel model);
+        public string Login(UserLoginViewModel model);
     }
 }

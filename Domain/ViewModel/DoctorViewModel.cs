@@ -13,6 +13,7 @@ namespace Domain.ViewModel
     {
         public Guid Id { get; set; }
         public string ProfilePicUrl { get; set; }
+        public string Description { get; set; }
         public string Name { get; set; }
     }
     public class DoctorParams 
@@ -20,12 +21,15 @@ namespace Domain.ViewModel
         public string Name { get; set; }
         public Guid MedicalSpecialtyId { get; set; }
         public Guid ClinicId { get; set; }
+        public DateTime AvailableDate { get; set; }
+        public Guid? DoctorId { get; set; }
     }
     public class DoctorInsertViewModel 
     {
         public string Document { get; set; }
         public string Name { get; set; }
         public string ProfilePicUrl { get; set; }
+        public string Description { get; set; }
         public DateTime BirthDate { get; set; }
         public Guid UserId { get; set; }
         public Guid ClinicId { get; set; }
