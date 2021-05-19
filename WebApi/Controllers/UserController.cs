@@ -41,12 +41,6 @@ namespace WebApi.Controllers
                 return BadRequest(ex.Message);
             }
         }
-<<<<<<< HEAD
-
-        
-
-
-=======
         [HttpPost]
         [Route("login")]
         public ActionResult Login(UserLoginViewModel model)
@@ -61,6 +55,5 @@ namespace WebApi.Controllers
                 return BadRequest(ex.Message);
             }
         }
->>>>>>> 18a35065dcda8686c17a751511eaca6bf8e9357b
     }
 }

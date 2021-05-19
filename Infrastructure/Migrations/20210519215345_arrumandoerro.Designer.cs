@@ -10,13 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(LabxContext))]
-<<<<<<< HEAD:Infrastructure/Migrations/20210519181719_initialcreate.Designer.cs
-    [Migration("20210519181719_initialcreate")]
-    partial class initialcreate
-=======
-    [Migration("20210519182607_InitialCreation")]
-    partial class InitialCreation
->>>>>>> 18a35065dcda8686c17a751511eaca6bf8e9357b:Infrastructure/Migrations/20210519182607_InitialCreation.Designer.cs
+    [Migration("20210519215345_arrumandoerro")]
+    partial class arrumandoerro
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
