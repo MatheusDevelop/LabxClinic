@@ -21,12 +21,22 @@ namespace Domain.Services.Implementations
         }
 
         public List<DoctorViewModel> List(DoctorParams model,FilterViewModel filter) 
-        {
+         {
             try
             {
                 IQueryable<Doctor> query = _repository.GetQuery();
+                if (model.DoctorId != null)
+                    query = query.Where(e => e.Id.Equals((Guid)model.DoctorId));
                 if (model.Name != null)
                     query = query.Where(e => e.Name.Contains(model.Name));
+                if (model.AvailableDate != DateTime.MinValue)
+                    query = query.Where(e => e.AvaibleDates.Any(e => 
+                    e.Date.Date.Equals(model.AvailableDate.Date)
+                    && e.Date.Month.Equals(model.AvailableDate.Month)
+                    && e.Date.Year.Equals(model.AvailableDate.Year)
+                    && e.Date.Hour.Equals(model.AvailableDate.Hour)
+                    && e.Date.Minute.Equals(model.AvailableDate.Minute)
+                    ));
                 if (model.ClinicId != Guid.Empty)
                     query = query.Where(e => e.ClinicId.Equals(model.ClinicId));
                 if (model.MedicalSpecialtyId != Guid.Empty)

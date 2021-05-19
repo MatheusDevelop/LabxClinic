@@ -22,9 +22,9 @@ namespace Domain.Validations
                 .MustAsync( async (id,token)=> await medicalSpecialtyRepository.Exists(id))
                 .WithMessage("Especialidade médica não encontrada.");
 
-            RuleFor(e => e.PacientId).NotEmpty()
+            /*RuleFor(e => e.PacientId).NotEmpty()
                 .MustAsync(async (id, token) => await pacientRepository.Exists(id))
-                .WithMessage("Paciente não encontrado.");
+                .WithMessage("Paciente não encontrado.");*/
 
             RuleFor(e => e.ClinicId).NotEmpty()
                 .MustAsync(async (id, token) => await clinicRepository.Exists(id))

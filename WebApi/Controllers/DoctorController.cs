@@ -39,7 +39,7 @@ namespace WebApi.Controllers
             try
             {
                 List<DoctorViewModel> content = _services.List(model,filter);
-                return Ok(new { content, model });
+                return Ok(new { content, filter });
             }
             catch (Exception ex)
             {

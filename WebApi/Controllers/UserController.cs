@@ -26,6 +26,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
+        [Route("sing-up")]
         public async Task<IActionResult> Post(UserInsertViewModel model)
         {
             try
@@ -40,9 +41,26 @@ namespace WebApi.Controllers
                 return BadRequest(ex.Message);
             }
         }
+<<<<<<< HEAD
 
         
 
 
+=======
+        [HttpPost]
+        [Route("login")]
+        public ActionResult Login(UserLoginViewModel model)
+        {
+            try
+            {
+                var jwt = _services.Login(model);
+                return Ok(new { jwt });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+>>>>>>> 18a35065dcda8686c17a751511eaca6bf8e9357b
     }
 }

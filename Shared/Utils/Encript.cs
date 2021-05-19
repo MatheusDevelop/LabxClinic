@@ -11,7 +11,6 @@ namespace Shared.Utils
         {
             var strArr = nameForSalt.ToCharArray();
 
-            //Pega os 3 primeiros digitos do nome pro salt
             string str = strArr[0].ToString() + strArr[1].ToString() + strArr[2].ToString();
 
 
