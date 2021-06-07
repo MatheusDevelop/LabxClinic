@@ -16,11 +16,13 @@ namespace Infrastructure.Context
         public DbSet<ClinicAddress> ClinicAddress { get; set; }
         public DbSet<ClinicMedicalSpecialty> ClinicMedicalSpecialty { get; set; }
         public DbSet<DoctorClinicMedicalSpecialty> DoctorClinicMedicalSpecialty { get; set; }
-
         public DbSet<Schedule> Schedule { get; set; }
         public DbSet<AvailableDate> AvaibleDate { get; set; }
         public DbSet<User> User { get; set; }
         public DbSet<Person> Person { get; set; }
+        public DbSet<Surgery> Surgeries { get; set; }
+        public DbSet<Allergy> Allergies { get; set; }
+        public DbSet<Exam> Exams { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -32,9 +34,12 @@ namespace Infrastructure.Context
             modelBuilder.ApplyConfiguration(new ClinicMedicalSpecialtyMap());
             modelBuilder.ApplyConfiguration(new DoctorClinicMedicalSpecialtyMap());
             modelBuilder.ApplyConfiguration(new DoctorMap());
-
+            modelBuilder.ApplyConfiguration(new AllergyMap());
+            modelBuilder.ApplyConfiguration(new SurgeryMap());
             modelBuilder.ApplyConfiguration(new PersonMap());
             modelBuilder.ApplyConfiguration(new UserMap());
+            modelBuilder.ApplyConfiguration(new ExamMap());
+
 
         }
     }

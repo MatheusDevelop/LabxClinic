@@ -44,6 +44,23 @@ namespace Infrastructure.Repositories
         {
             return dbEntity.AsNoTracking().AsQueryable();
         }
+        public async Task InsertRangeAsync(List<T> entity)
+        {
+            await dbEntity.AddRangeAsync(entity);
+            await _con.SaveChangesAsync();
+        }
+        public async Task DeleteRangeAsync(List<T> entity)
+        {
+            dbEntity.RemoveRange(entity);
+            await _con.SaveChangesAsync();
+        }
+        public async Task DeleteRangeAsync(List<Guid> ids)
+        {
+            foreach (var item in ids)
+            {
+                await DeleteAsync(item);
+            }
+        }
         public async Task DeleteAsync(T entity)
         {
             dbEntity.Remove(entity);

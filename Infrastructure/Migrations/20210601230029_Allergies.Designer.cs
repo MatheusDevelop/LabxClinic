@@ -4,14 +4,16 @@ using Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(LabxContext))]
-    partial class LabxContextModelSnapshot : ModelSnapshot
+    [Migration("20210601230029_Allergies")]
+    partial class Allergies
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -248,51 +250,6 @@ namespace Infrastructure.Migrations
                     b.HasIndex("DoctorId");
 
                     b.ToTable("DoctorClinicMedicalSpecialty");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Exam", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Deleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("DoctorId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("FileUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("PacientId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("Pendency")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("PrevisionDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("UpdateDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DoctorId");
-
-                    b.HasIndex("PacientId");
-
-                    b.ToTable("Exams");
                 });
 
             modelBuilder.Entity("Domain.Entities.MedicalSpecialty", b =>
@@ -604,25 +561,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("Doctor");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Exam", b =>
-                {
-                    b.HasOne("Domain.Entities.Doctor", "Doctor")
-                        .WithMany("Exams")
-                        .HasForeignKey("DoctorId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.Pacient", "Pacient")
-                        .WithMany("Exams")
-                        .HasForeignKey("PacientId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Doctor");
-
-                    b.Navigation("Pacient");
-                });
-
             modelBuilder.Entity("Domain.Entities.Person", b =>
                 {
                     b.HasOne("Domain.Entities.User", "User")
@@ -719,8 +657,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("Consultations");
 
                     b.Navigation("DoctorClinicMedicalSpecialties");
-
-                    b.Navigation("Exams");
                 });
 
             modelBuilder.Entity("Domain.Entities.Pacient", b =>
@@ -728,8 +664,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("Allergies");
 
                     b.Navigation("Consultations");
-
-                    b.Navigation("Exams");
 
                     b.Navigation("Surgeries");
                 });

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Domain.Repositories
 {
-    public interface IDoctorRepository:IGenericRepository<Doctor>
+    public interface IExamRepository:IGenericRepository<Exam>
     {
     }
 }

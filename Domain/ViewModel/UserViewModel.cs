@@ -11,6 +11,7 @@ namespace Domain.ViewModel
         public string Password { get; set; }
     }
     
+    
     public class UserLoginViewModel
     {
         public string Email { get; set; }

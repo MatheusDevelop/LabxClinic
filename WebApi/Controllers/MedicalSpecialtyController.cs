@@ -15,11 +15,9 @@ namespace WebApi.Controllers
     [ApiController]
     public class MedicalSpecialtyController : CrudController<MedicalSpecialty,MedicalSpecialtyInsertViewModel,IMedicalSpecialtyServices>
     {
-        private readonly IMedicalSpecialtyServices _services;
 
         public MedicalSpecialtyController(IMedicalSpecialtyServices services):base(services)
         {
-            _services = services;
         }
         [HttpGet]
         [Route("select")]

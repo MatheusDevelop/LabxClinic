@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(LabxContext))]
-    [Migration("20210519215345_arrumandoerro")]
-    partial class arrumandoerro
+    [Migration("20210521163424_Pacients")]
+    partial class Pacients
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -252,26 +252,6 @@ namespace Infrastructure.Migrations
                     b.ToTable("MedicalSpecialty");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Pacient", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Deleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("UpdateDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Pacient");
-                });
-
             modelBuilder.Entity("Domain.Entities.Person", b =>
                 {
                     b.Property<Guid>("Id")
@@ -390,6 +370,13 @@ namespace Infrastructure.Migrations
                     b.HasIndex("ClinicId");
 
                     b.HasDiscriminator().HasValue("Doctor");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Pacient", b =>
+                {
+                    b.HasBaseType("Domain.Entities.Person");
+
+                    b.HasDiscriminator().HasValue("Pacient");
                 });
 
             modelBuilder.Entity("Domain.Entities.AvailableDate", b =>
@@ -563,11 +550,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("Schedule");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Pacient", b =>
-                {
-                    b.Navigation("Consultations");
-                });
-
             modelBuilder.Entity("Domain.Entities.Schedule", b =>
                 {
                     b.Navigation("AvaibleDates");
@@ -585,6 +567,11 @@ namespace Infrastructure.Migrations
                     b.Navigation("Consultations");
 
                     b.Navigation("DoctorClinicMedicalSpecialties");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Pacient", b =>
+                {
+                    b.Navigation("Consultations");
                 });
 #pragma warning restore 612, 618
         }

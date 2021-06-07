@@ -17,6 +17,7 @@ namespace Domain.Entities
         public ICollection<DoctorClinicMedicalSpecialty> DoctorClinicMedicalSpecialties { get; set; }
         public ICollection<AvailableDate> AvaibleDates { get; private set; }
         public ICollection<Consultation> Consultations { get; private set; }
+        public ICollection<Exam> Exams { get; private set; }
     }
     public class DoctorMap : IEntityTypeConfiguration<Doctor>
     {

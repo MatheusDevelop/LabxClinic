@@ -30,6 +30,10 @@ namespace WebApi.Configuration
             services.AddScoped<IScheduleRepository, ScheduleRepository>();
             services.AddScoped<IMedicalSpecialtyRepository, MedicalSpecialtyRepository>();
             services.AddScoped<IAvaibleDateRepository, AvaibleDateRepository>();
+            services.AddScoped<IAllergyRepository, AllergyRepository>();
+            services.AddScoped<ISurgeryRepository, SurgeryRepository>();
+            services.AddScoped<IExamRepository, ExamRepository>();
+
 
         }
 
@@ -42,11 +46,15 @@ namespace WebApi.Configuration
             services.AddScoped<IClinicMedicalSpecialtyServices, ClinicMedicalSpecialtyServices>();
             services.AddScoped<IDoctorClinicMedicalSpecialtyServices, DoctorClinicMedicalSpecialtyServices>();
             services.AddScoped<IUserServices, UserServices>();
-
+            services.AddScoped<IAllergyServices, AllergyServices>();
             services.AddScoped<IMedicalSpecialtyServices, MedicalSpecialtyServices>();
             services.AddScoped<IScheduleServices, ScheduleServices>();
             services.AddScoped<IAddressServices, AddressServices>();
             services.AddScoped<IAvaibleDateServices, AvailableDateServices>();
+            services.AddScoped<ISurgeryServices, SurgeryServices>();
+            services.AddScoped<IExamServices, ExamServices>();
+
+
 
         }
     }

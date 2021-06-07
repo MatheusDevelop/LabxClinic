@@ -13,13 +13,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4-Tests", "4-Tests", "{D0B9
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5-Shared", "5-Shared", "{C69BFCC0-F800-499E-9BE5-CE76459D9E83}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{20747E91-10FC-4B2D-A464-901B93D570BD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{20747E91-10FC-4B2D-A464-901B93D570BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{57A77D9E-C9C2-47C6-801A-AC5033446767}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "Shared\Shared.csproj", "{57A77D9E-C9C2-47C6-801A-AC5033446767}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{13EF2248-E1AF-43E2-821D-C485B2A48B8C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{13EF2248-E1AF-43E2-821D-C485B2A48B8C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi", "WebApi\WebApi.csproj", "{343E037F-688B-4A9F-B8A7-5A2AE89E038C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi", "WebApi\WebApi.csproj", "{343E037F-688B-4A9F-B8A7-5A2AE89E038C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

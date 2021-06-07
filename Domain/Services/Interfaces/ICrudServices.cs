@@ -11,6 +11,14 @@ namespace Domain.Services.Interfaces
         public Task Insert(InsertViewModel model);
         public Task Update(InsertViewModel model, Guid id);
         public Task Delete(Guid id);
+        Task<TEntity> InsertAndReturnEntity(InsertViewModel model);
+        Task<TEntity> UpdateAndReturnEntity(InsertViewModel model, Guid id);
+        Task Insert(List<TEntity> entity);
+        Task Insert(TEntity entity);
+        Task Delete(List<TEntity> entities);
+        Task Delete(List<Guid> ids);
+
+
 
     }
 }

@@ -14,10 +14,14 @@ namespace Shared.Domain.Repositories
         public IQueryable<T> GetQuery();
         public Task<T> Find(Guid id);
         public Task InsertAsync(T entity);
+        public Task InsertRangeAsync(List<T> entity);
+        public Task DeleteRangeAsync(List<T> entity);
         public Task UpdateAsync(T entity);
         public Task<bool> Exists(Guid id);
         public Task DeleteAsync(T entity);
         public Task DeleteAsync(Guid id);
+        public Task DeleteRangeAsync(List<Guid> id);
+
 
     }
 }

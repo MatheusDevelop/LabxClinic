@@ -11,6 +11,7 @@ namespace Domain.ViewModel
         public Guid MedicalSpecialtyId { get; set; }
         public Guid ClinicId { get; set; }
         public DateTime ConsultationDate { get; set; }
+        public string ConsultationName { get; set; }
 
     }
     public class ConsultationViewModel 

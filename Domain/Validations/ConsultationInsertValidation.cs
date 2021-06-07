@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Domain.Validations
 {
-    public class ConsultationInsertValidation:AbstractValidator<ConsultationInsertViewModel>
+    public class ConsultationInsertValidation : AbstractValidator<ConsultationInsertViewModel>
     {
         public ConsultationInsertValidation(
             IMedicalSpecialtyRepository medicalSpecialtyRepository,
@@ -15,16 +15,17 @@ namespace Domain.Validations
             IClinicRepository clinicRepository,
             IPacientRepository pacientRepository)
         {
+
             RuleFor(e => e.ConsultationDate).Must(date => date > DateTime.Now)
                 .WithMessage("Data de consulta invalida");
 
             RuleFor(e => e.MedicalSpecialtyId).NotEmpty()
-                .MustAsync( async (id,token)=> await medicalSpecialtyRepository.Exists(id))
+                .MustAsync(async (id, token) => await medicalSpecialtyRepository.Exists(id))
                 .WithMessage("Especialidade médica não encontrada.");
 
-            /*RuleFor(e => e.PacientId).NotEmpty()
+            RuleFor(e => e.PacientId).NotEmpty()
                 .MustAsync(async (id, token) => await pacientRepository.Exists(id))
-                .WithMessage("Paciente não encontrado.");*/
+                .WithMessage("Paciente não encontrado.");
 
             RuleFor(e => e.ClinicId).NotEmpty()
                 .MustAsync(async (id, token) => await clinicRepository.Exists(id))

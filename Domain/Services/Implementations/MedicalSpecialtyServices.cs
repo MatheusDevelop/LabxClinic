@@ -15,13 +15,9 @@ namespace Domain.Services.Implementations
 {
     public class MedicalSpecialtyServices : CrudService<MedicalSpecialty,MedicalSpecialtyInsertViewModel>,IMedicalSpecialtyServices
     {
-        private readonly IMedicalSpecialtyRepository _repository;
-        private readonly IMapper _mapper;
 
         public MedicalSpecialtyServices(IMedicalSpecialtyRepository repository, IMapper mapper):base(repository,mapper)
         {
-            _repository = repository;
-            _mapper = mapper;
         }
 
         public List<MedicalSpecialtySelectViewModel> Select(FilterViewModel filter) 

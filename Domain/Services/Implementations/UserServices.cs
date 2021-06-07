@@ -3,6 +3,7 @@ using Domain.Entities;
 using Domain.Repositories;
 using Domain.Services.Interfaces;
 using Domain.ViewModel;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Shared.Domain.Services;
@@ -17,17 +18,18 @@ using System.Threading.Tasks;
 
 namespace Domain.Services.Implementations
 {
-    public class UserServices : CrudService<User,UserInsertViewModel>, IUserServices
+    public class UserServices : CrudService<User, UserInsertViewModel>, IUserServices
     {
         private readonly IConfiguration _config;
+        private readonly IPacientRepository _pacientRepository;
 
         public UserServices(
             IUserRepository repository,
-            IMapper mapper, IConfiguration config) : base(repository, mapper)
+            IMapper mapper, IConfiguration config, IPacientRepository pacientRepository) : base(repository, mapper)
         {
             _config = config;
+            _pacientRepository = pacientRepository;
         }
-
 
         public override Task Insert(UserInsertViewModel model)
         {
@@ -39,7 +41,7 @@ namespace Domain.Services.Implementations
             User entity = _mapper.Map<User>(model);
             var query = _repository.GetQuery();
             var password = Encript.GetPasswordEncripted(model.Password, model.Email);
-            User user = query.FirstOrDefault(e => e.Password.Equals(password));
+            User user = query.FirstOrDefault(e => e.Password.Equals(password) && e.Email.Equals(model.Email));
             if (user == null) return null;
             return GetJwt(user);
         }
@@ -48,13 +50,15 @@ namespace Domain.Services.Implementations
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
-            // Definimos nossas Claims (dados da sessão) para poderem ser capturadas
-            // a qualquer momento enquanto o Token for ativo
+            var pacient = _pacientRepository.GetQuery().FirstOrDefault(e => e.UserId == user.Id);
             var claims = new Claim[] {
+                new Claim("pacientId",pacient != null ? pacient.Id.ToString(): ""),
+                new Claim("userId",user.Id.ToString()),
+                new Claim("name",user.Name),
+
 
             };
 
-            // Configuramos nosso Token e seu tempo de vida
             var token = new JwtSecurityToken
                 (
                     _config["Jwt:Issuer"],

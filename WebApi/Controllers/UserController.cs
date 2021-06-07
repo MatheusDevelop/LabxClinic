@@ -48,7 +48,7 @@ namespace WebApi.Controllers
             try
             {
                 var jwt = _services.Login(model);
-                return Ok(new { jwt });
+                return Ok(new {validLogin=jwt!= null,jwt });
             }
             catch (Exception ex)
             {

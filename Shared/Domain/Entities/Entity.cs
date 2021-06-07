@@ -8,7 +8,7 @@ namespace Shared.Domain.Entities
     {
         public Guid Id { get; private set; }
         public DateTime CreationDate { get; private set; } = DateTime.UtcNow;
-        public DateTime UpdateDate { get; private set; }
+        public DateTime UpdateDate { get; private set; } = DateTime.UtcNow;
         public bool Deleted { get; private set; }
 
         public Entity()

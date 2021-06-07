@@ -15,17 +15,15 @@ namespace WebApi.Controllers
     [ApiController]
     public class ClinicController : CrudController<Clinic,ClinicInsertViewModel,IClinicServices>
     {
-        private readonly IClinicServices _services;
         public ClinicController(IClinicServices services):base(services)
         {
-            _services = services;
         }
         [HttpGet]
         public ActionResult<List<ClinicViewModel>> List([FromQuery]ClinicParams model,[FromQuery] FilterViewModel filter)
         {
             try
             {
-                List<ClinicViewModel> content = _services.List(model,filter);
+                var content = _services.List(model,filter);
                 return Ok(new { content, filter });
             }
             catch (Exception ex)
