@@ -62,17 +62,18 @@ namespace Domain.Entities
 
             builder.Property(e => e.ConsultationName).HasMaxLength(100)
                 .IsRequired();
+
             builder.HasOne(e => e.Pacient)
                    .WithMany(e => e.Consultations)
                    .HasForeignKey(e => e.PacientId);
 
             builder.HasOne(e => e.MedicalSpecialty)
                    .WithMany(e => e.Consultations)
-                   .HasForeignKey(e => e.PacientId);
+                   .HasForeignKey(e => e.MedicalSpecialtyId);
 
             builder.HasOne(e => e.Clinic)
                    .WithMany(e => e.Consultations)
-                   .HasForeignKey(e => e.PacientId);
+                   .HasForeignKey(e => e.ClinicId);
 
 
         }

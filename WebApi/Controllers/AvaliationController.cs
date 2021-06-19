@@ -11,34 +11,28 @@ using Shared.Domain.ViewModels;
 
 namespace WebApi.Controllers
 {
-    [Route("api/v1/pacients")]
+    [Route("api/v1/avaliations")]
     [ApiController]
-    public class PacientController : CrudController<Pacient, PacientInsertViewModel, IPacientServices>
+    public class AvaliationController : CrudController<Avaliation, AvaliationInsertViewModel, IAvaliationServices>
     {
-        public PacientController(IPacientServices services) : base(services)
+        public AvaliationController(IAvaliationServices services) : base(services)
         {
         }
+
         [HttpGet]
-        public ActionResult<List<PacientSelectViewModel>> Get(
-            [FromQuery] PacientParams param
+        public ActionResult<List<AvaliationListViewModel>> Get(
+            [FromQuery] AvaliationParams param
             , [FromQuery] FilterViewModel filter)
         {
             try
             {
-                return Ok(new { content = _services.List(param, filter), filter });
+                var content  = _services.List(param, filter);
+                return base.Ok(new { content = content.content, filter ,content.average});
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
-
-        [HttpGet]
-        [Route("{id:Guid}")]
-        public ActionResult<PacientViewModel> View(Guid id)
-        {
-            return Ok(new { content = _services.View(id) });
-        }
-        
     }
 }

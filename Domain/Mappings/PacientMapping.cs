@@ -13,7 +13,9 @@ namespace Domain.Mappings
         {
             CreateMap<PacientInsertViewModel, Pacient>().ForMember(s => s.Allergies, opt=> opt.Ignore())
                 .ForMember(s => s.Surgeries, opt => opt.Ignore());
-            CreateMap<Pacient, PacientViewModel>().ReverseMap();
+            CreateMap<Pacient, PacientViewModel>();
+            CreateMap<Pacient, PacientSelectViewModel>();
+
         }
     }
 }

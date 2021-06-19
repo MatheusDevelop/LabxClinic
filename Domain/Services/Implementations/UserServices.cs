@@ -22,13 +22,15 @@ namespace Domain.Services.Implementations
     {
         private readonly IConfiguration _config;
         private readonly IPacientRepository _pacientRepository;
+        private readonly IDoctorRepository _doctorRepository;
 
         public UserServices(
             IUserRepository repository,
-            IMapper mapper, IConfiguration config, IPacientRepository pacientRepository) : base(repository, mapper)
+            IMapper mapper, IConfiguration config, IPacientRepository pacientRepository, IDoctorRepository doctorRepository) : base(repository, mapper)
         {
             _config = config;
             _pacientRepository = pacientRepository;
+            _doctorRepository = doctorRepository;
         }
 
         public override Task Insert(UserInsertViewModel model)
@@ -51,10 +53,19 @@ namespace Domain.Services.Implementations
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
             var pacient = _pacientRepository.GetQuery().FirstOrDefault(e => e.UserId == user.Id);
+            var doctor = _doctorRepository.GetQuery().FirstOrDefault(e => e.UserId == user.Id);
+
+            var name = "";
+            if (pacient != null)
+                name = pacient.Name;
+            if (doctor != null)
+                name = doctor.Name;
             var claims = new Claim[] {
                 new Claim("pacientId",pacient != null ? pacient.Id.ToString(): ""),
+                new Claim("doctorId",doctor != null ? doctor.Id.ToString(): ""),
                 new Claim("userId",user.Id.ToString()),
-                new Claim("name",user.Name),
+                new Claim("name",name),
+                new Claim("role",pacient == null ? "doctor":"pacient")
 
 
             };

@@ -12,5 +12,6 @@ namespace Domain.Services.Interfaces
     {
         public List<MedicalSpecialtySelectViewModel> Select(FilterViewModel filter);
         public List<MedicalSpecialtySelectViewModel> GetSelectViewModel(List<MedicalSpecialty> entities);
+        List<MedicalSpecialtySelectViewModel> GetWithDoctorId(Guid doctorId);
     }
 }

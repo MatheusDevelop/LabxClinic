@@ -16,8 +16,11 @@ namespace Domain.Services.Implementations
 {
     public class DoctorServices : CrudService<Doctor, DoctorInsertViewModel>, IDoctorServices
     {
-        public DoctorServices(IDoctorRepository repository, IMapper mapper) : base(repository, mapper)
+        private readonly IMedicalSpecialtyServices _medicalSpecialtyServices;
+
+        public DoctorServices(IDoctorRepository repository, IMapper mapper, IMedicalSpecialtyServices medicalSpecialtyServices) : base(repository, mapper)
         {
+            _medicalSpecialtyServices = medicalSpecialtyServices;
         }
 
         public List<DoctorViewModel> List(DoctorParams model,FilterViewModel filter) 
@@ -51,6 +54,7 @@ namespace Domain.Services.Implementations
             }
         }
 
+
         private static IQueryable<Doctor> QuicksearchFilter(FilterViewModel filter, IQueryable<Doctor> query)
         {
             if (!String.IsNullOrEmpty(filter.Quicksearch))
@@ -63,9 +67,16 @@ namespace Domain.Services.Implementations
             var models = new List<DoctorViewModel>();
             foreach (var entity in entities)
             {
-                models.Add(_mapper.Map<DoctorViewModel>(entity));
+                models.Add(GetViewModel(entity));
             }
             return models;
+        }
+
+        private DoctorViewModel GetViewModel(Doctor entity)
+        {
+            DoctorViewModel model = _mapper.Map<DoctorViewModel>(entity);
+            model.MedicalSpecialties = _medicalSpecialtyServices.GetWithDoctorId(entity.Id);
+            return model;
         }
 
         public List<DoctorSelectViewModel> Select(FilterViewModel filter)
@@ -88,9 +99,14 @@ namespace Domain.Services.Implementations
             var models = new List<DoctorSelectViewModel>();
             foreach (var entity in entities)
             {
-                models.Add(_mapper.Map<DoctorSelectViewModel>(entity));
+                models.Add(GetSelectViewModel(entity));
             }
             return models;
+        }
+
+        public DoctorSelectViewModel GetSelectViewModel(Doctor entity)
+        {
+            return _mapper.Map<DoctorSelectViewModel>(entity);
         }
     }
 }

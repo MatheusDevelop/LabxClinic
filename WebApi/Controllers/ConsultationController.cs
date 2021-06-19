@@ -18,18 +18,20 @@ namespace WebApi.Controllers
             _services = services;
         }
         [HttpGet]
-        public ActionResult<List<ConsultationViewModel>> Get(
+
+        public ActionResult<List<ConsultationListViewModel>> Get(
             [FromQuery]ConsultationParams param
             , [FromQuery]FilterViewModel filter)
         {
             try
             {
-                return _services.List(param, filter);
+                return Ok(new { content = _services.List(param, filter) ,filter });
             } catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
+        
         [HttpPost]
         public async Task<IActionResult> Post(ConsultationInsertViewModel model)
         {

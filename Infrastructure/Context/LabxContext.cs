@@ -23,6 +23,9 @@ namespace Infrastructure.Context
         public DbSet<Surgery> Surgeries { get; set; }
         public DbSet<Allergy> Allergies { get; set; }
         public DbSet<Exam> Exams { get; set; }
+        public DbSet<Avaliation> Avaliations { get; set; }
+        public DbSet<Insurance> Insurances { get; set; }
+        public DbSet<ExamCoverage> ExamCoverages { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -39,6 +42,9 @@ namespace Infrastructure.Context
             modelBuilder.ApplyConfiguration(new PersonMap());
             modelBuilder.ApplyConfiguration(new UserMap());
             modelBuilder.ApplyConfiguration(new ExamMap());
+            modelBuilder.ApplyConfiguration(new PacientMap());
+            modelBuilder.ApplyConfiguration(new ExamCoverageMap());
+            modelBuilder.ApplyConfiguration(new AvaliationMap());
 
 
         }

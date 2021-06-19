@@ -38,6 +38,11 @@ namespace Domain.Services.Implementations
                 throw ex;
             }
         }
+        public List<MedicalSpecialtySelectViewModel> GetWithDoctorId(Guid doctorId) 
+        {
+            var list = _repository.GetQuery().Where(e => e.ClinicMedicalSpecialties.Any(e => e.DoctorClinicMedicalSpecialties.Any(e => e.DoctorId.Equals(doctorId)))).ToList();
+            return GetSelectViewModel(list);
+        }
 
         public List<MedicalSpecialtySelectViewModel> GetSelectViewModel(List<MedicalSpecialty> entities)
         {

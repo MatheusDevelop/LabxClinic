@@ -3,6 +3,8 @@ using Domain.Entities;
 using Domain.Repositories;
 using Domain.Services.Interfaces;
 using Domain.ViewModel;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Shared.Domain.Entities;
 using Shared.Domain.Services;
 using Shared.Domain.ViewModels;
@@ -19,19 +21,30 @@ namespace Domain.Services.Implementations
     {
         private readonly IMapper _mapper;
         private readonly IConsultationRepository _repository;
-       
+        private readonly IClinicServices _clinicServices;
+        private readonly IDoctorServices _doctorServices;
+        private readonly IPacientServices _pacientServices;
         public ConsultationServices(
             IMapper mapper,
-            IConsultationRepository repository)
+            IConsultationRepository repository, IClinicServices clinicServices, IDoctorServices doctorServices, IPacientServices pacientServices)
         {
             _mapper = mapper;
             _repository = repository;
+            _clinicServices = clinicServices;
+            _doctorServices = doctorServices;
+            _pacientServices = pacientServices;
         }
 
 
-        public List<ConsultationViewModel> List(ConsultationParams model, FilterViewModel filter)
+        public List<ConsultationListViewModel> List(ConsultationParams model, FilterViewModel filter)
         {
-            IQueryable<Consultation> query = _repository.GetQuery();
+            IQueryable<Consultation> query = _repository.GetQuery().Include(e => e.Clinic).ThenInclude(e=> e.ClinicAddress).Include(e => e.Pacient).Include(e => e.Doctor);
+
+            if (!String.IsNullOrEmpty(filter.Quicksearch))
+                query = query.Where(e => e.ConsultationName.Contains(filter.Quicksearch));
+
+            if (model.Id != Guid.Empty)
+                query = query.Where(e => e.Id.Equals(model.Id));
 
             if (model.DoctorId != Guid.Empty)
                 query = query.Where(e => e.DoctorId.Equals(model.DoctorId));
@@ -45,18 +58,16 @@ namespace Domain.Services.Implementations
             if (model.ConsultationDate != DateTime.MinValue)
                 query = query.Where(e => e.ConsultationDate.Date == model.ConsultationDate);
 
-            Expression<Func<Consultation, object>> orderBy = e => e.ConsultationName;
+            Expression<Func<Consultation, object>> orderBy = e => e.ConsultationDate;
 
-            //if (filter.OrderColumn == "pacient_name")
-            //    orderBy = e => e.Pacient.Name;
-
-            List<Consultation> list = _repository.GetList(query, filter,orderBy);
+            List<Consultation> list = _repository.GetList(query, filter, orderBy);
 
             return GetViewModel(list);
 
         }
-        
+
         public async Task Insert(ConsultationInsertViewModel model)
+
         {
             Consultation entity = _mapper.Map<Consultation>(model);
             await _repository.InsertAsync(entity);
@@ -72,14 +83,26 @@ namespace Domain.Services.Implementations
             entity.SetId(id);
             await _repository.UpdateAsync(entity);
         }
-        public List<ConsultationViewModel> GetViewModel(List<Consultation> entities)
+        public List<ConsultationListViewModel> GetViewModel(List<Consultation> entities)
         {
-            var models = new List<ConsultationViewModel>();
+            var models = new List<ConsultationListViewModel>();
             foreach (var entity in entities)
             {
-                models.Add(_mapper.Map<ConsultationViewModel>(entity));
+                models.Add(GetViewModel(entity));
             }
             return models;
         }
+
+        private ConsultationListViewModel GetViewModel(Consultation entity)
+        {
+            ConsultationListViewModel model = _mapper.Map<ConsultationListViewModel>(entity);
+            model.Doctor = _doctorServices.GetSelectViewModel(entity.Doctor);
+            model.Pacient = _pacientServices.GetSelectViewModel(entity.Pacient);
+            model.Clinic = _clinicServices.GetViewModel(entity.Clinic);
+
+            return model;
+        }
+
+
     }
 }

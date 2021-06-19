@@ -8,15 +8,19 @@ namespace Domain.ViewModel
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
+        public string ProfilePicUrl { get; set; }
     }
-    public class PacientViewModel 
+    public class PacientListViewModel:PacientSelectViewModel {
+    }
+
+    public class PacientParams {
+        public Guid DoctorId { get; set; }
+    }
+
+    public class PacientViewModel :PersonViewModel
     {
-        public string Document { get; private set; }
-        public string Name { get; private set; }
-        public string ProfilePicUrl { get; private set; }
-        public string Description { get; private set; }
-        public DateTime BirthDate { get; private set; }
-        public Guid Id { get; set; }
+        
+        public Guid InsuranceId { get; set; }
         public string BloodType { get; set; }
         public bool AlreadyHadAvc { get; set; }
         public bool AlreadyFainted { get; set; }
@@ -32,10 +36,12 @@ namespace Domain.ViewModel
         public string ProfilePicUrl { get; set; }
         public string Description { get; set; }
         public DateTime BirthDate { get; set; }
+        
         public string BloodType { get; set; }
         public bool AlreadyHadAvc { get; set; }
         public bool AlreadyFainted { get; set; }
         public bool HaveWalkingDifficulty { get; set; }
+        public Guid InsuranceId { get; set; }
         public Guid UserId { get; set; }
     }
 }

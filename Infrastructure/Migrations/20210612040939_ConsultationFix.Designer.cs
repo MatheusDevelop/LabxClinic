@@ -4,14 +4,16 @@ using Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(LabxContext))]
-    partial class LabxContextModelSnapshot : ModelSnapshot
+    [Migration("20210612040939_ConsultationFix")]
+    partial class ConsultationFix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -78,37 +80,6 @@ namespace Infrastructure.Migrations
                     b.HasIndex("ScheduleId");
 
                     b.ToTable("AvaibleDate");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Avaliation", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Comment")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Deleted")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid>("DoctorId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Note")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("UpdateDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DoctorId");
-
-                    b.ToTable("Avaliations");
                 });
 
             modelBuilder.Entity("Domain.Entities.Clinic", b =>
@@ -330,66 +301,6 @@ namespace Infrastructure.Migrations
                     b.ToTable("Exams");
                 });
 
-            modelBuilder.Entity("Domain.Entities.ExamCoverage", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Deleted")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid>("InsuranceId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("UpdateDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("InsuranceId");
-
-                    b.ToTable("ExamCoverages");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Insurance", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Deleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Holder")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PicUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PlanName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("UpdateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("WalletNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Insurances");
-                });
-
             modelBuilder.Entity("Domain.Entities.MedicalSpecialty", b =>
                 {
                     b.Property<Guid>("Id")
@@ -561,9 +472,6 @@ namespace Infrastructure.Migrations
                     b.Property<Guid>("ClinicId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Crm")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasIndex("ClinicId");
 
                     b.HasDiscriminator().HasValue("Doctor");
@@ -584,11 +492,6 @@ namespace Infrastructure.Migrations
 
                     b.Property<bool>("HaveWalkingDifficulty")
                         .HasColumnType("bit");
-
-                    b.Property<Guid>("InsuranceId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasIndex("InsuranceId");
 
                     b.HasDiscriminator().HasValue("Pacient");
                 });
@@ -621,17 +524,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("Doctor");
 
                     b.Navigation("Schedule");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Avaliation", b =>
-                {
-                    b.HasOne("Domain.Entities.Doctor", "Doctor")
-                        .WithMany("Avaliations")
-                        .HasForeignKey("DoctorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Doctor");
                 });
 
             modelBuilder.Entity("Domain.Entities.ClinicAddress", b =>
@@ -737,17 +629,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("Pacient");
                 });
 
-            modelBuilder.Entity("Domain.Entities.ExamCoverage", b =>
-                {
-                    b.HasOne("Domain.Entities.Insurance", "Insurance")
-                        .WithMany("ExamsCoverages")
-                        .HasForeignKey("InsuranceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Insurance");
-                });
-
             modelBuilder.Entity("Domain.Entities.Person", b =>
                 {
                     b.HasOne("Domain.Entities.User", "User")
@@ -800,17 +681,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("Clinic");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Pacient", b =>
-                {
-                    b.HasOne("Domain.Entities.Insurance", "Insurance")
-                        .WithMany("Pacients")
-                        .HasForeignKey("InsuranceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Insurance");
-                });
-
             modelBuilder.Entity("Domain.Entities.Clinic", b =>
                 {
                     b.Navigation("ClinicAddress");
@@ -827,13 +697,6 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.ClinicMedicalSpecialty", b =>
                 {
                     b.Navigation("DoctorClinicMedicalSpecialties");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Insurance", b =>
-                {
-                    b.Navigation("ExamsCoverages");
-
-                    b.Navigation("Pacients");
                 });
 
             modelBuilder.Entity("Domain.Entities.MedicalSpecialty", b =>
@@ -858,8 +721,6 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.Doctor", b =>
                 {
                     b.Navigation("AvaibleDates");
-
-                    b.Navigation("Avaliations");
 
                     b.Navigation("Consultations");
 

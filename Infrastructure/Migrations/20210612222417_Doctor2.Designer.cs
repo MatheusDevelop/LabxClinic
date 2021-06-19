@@ -4,14 +4,16 @@ using Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(LabxContext))]
-    partial class LabxContextModelSnapshot : ModelSnapshot
+    [Migration("20210612222417_Doctor2")]
+    partial class Doctor2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -78,37 +80,6 @@ namespace Infrastructure.Migrations
                     b.HasIndex("ScheduleId");
 
                     b.ToTable("AvaibleDate");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Avaliation", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Comment")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Deleted")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid>("DoctorId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Note")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("UpdateDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DoctorId");
-
-                    b.ToTable("Avaliations");
                 });
 
             modelBuilder.Entity("Domain.Entities.Clinic", b =>
@@ -623,17 +594,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("Schedule");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Avaliation", b =>
-                {
-                    b.HasOne("Domain.Entities.Doctor", "Doctor")
-                        .WithMany("Avaliations")
-                        .HasForeignKey("DoctorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Doctor");
-                });
-
             modelBuilder.Entity("Domain.Entities.ClinicAddress", b =>
                 {
                     b.HasOne("Domain.Entities.Clinic", "Clinic")
@@ -858,8 +818,6 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.Doctor", b =>
                 {
                     b.Navigation("AvaibleDates");
-
-                    b.Navigation("Avaliations");
 
                     b.Navigation("Consultations");
 

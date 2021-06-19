@@ -21,7 +21,11 @@ namespace WebApi.Configuration
                 typeof(UserMapping),
                 typeof(AllergyMapping),
                 typeof(SurgeryMapping),
-                typeof(ExamMapping)
+                typeof(ExamMapping),
+                typeof(InsuranceMapping),
+                typeof(ExamCoverageMapping),
+                typeof(AvaliationMapping)
+
                 )
                 ;
         }

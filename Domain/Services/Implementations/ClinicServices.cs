@@ -45,16 +45,22 @@ namespace Domain.Services.Implementations
             }
         }
 
-        private List<ClinicViewModel> GetViewModel(List<Clinic> entities)
+        public List<ClinicViewModel> GetViewModel(List<Clinic> entities)
         {
             var models = new List<ClinicViewModel>();
             foreach (var entity in entities)
             {
-                ClinicViewModel entityMapped = _mapper.Map<ClinicViewModel>(entity);
-                entityMapped.Address = _addressServices.GetViewModel(entity.ClinicAddress);
+                ClinicViewModel entityMapped = GetViewModel(entity);
                 models.Add(entityMapped);
             }
             return models;
+        }
+
+        public ClinicViewModel GetViewModel(Clinic entity)
+        {
+            ClinicViewModel entityMapped = _mapper.Map<ClinicViewModel>(entity);
+            entityMapped.Address = _addressServices.GetViewModel(entity.ClinicAddress);
+            return entityMapped;
         }
 
         public List<ClinicSelectViewModel> Select(FilterViewModel filter) 

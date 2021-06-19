@@ -12,7 +12,9 @@ namespace Domain.Mappings.ConsultationMaps
         public ConsultationMapping()
         {
             CreateMap<ConsultationInsertViewModel, Consultation>();
-            CreateMap<ConsultationViewModel, Consultation>();
+            CreateMap<Consultation, ConsultationListViewModel>()
+                ;
+
         }
     }
 }
